@@ -1,13 +1,7 @@
 -- TODO:
--- [x] install neogit
--- turn off highlight on indent line
--- [x] hortizontal terminal
--- change border to none on terminal
--- [x] comment blocks of code
 -- look up keybinds
 -- GitHub Copilot
--- LSP's
--- autopair
+-- LSP's for other languages
 
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --
@@ -50,7 +44,37 @@ return {
   },
 
   -- add terminal to nvim
-  { "akinsho/toggleterm.nvim", version = "*", config = true },
+  -- { "akinsho/toggleterm.nvim", version = "*", config = true },
+  {
+    "akinsho/toggleterm.nvim",
+    cmd = { "ToggleTerm", "TermExec" },
+    opts = {
+      highlights = {
+        Normal = { link = "Normal" },
+        NormalNC = { link = "NormalNC" },
+        NormalFloat = { link = "NormalFloat" },
+        FloatBorder = { link = "FloatBorder" },
+        StatusLine = { link = "StatusLine" },
+        StatusLineNC = { link = "StatusLineNC" },
+        WinBar = { link = "WinBar" },
+        WinBarNC = { link = "WinBarNC" },
+      },
+      size = 10,
+      ---@param t Terminal
+      on_create = function(t)
+        vim.opt.foldcolumn = "0"
+        vim.opt.signcolumn = "no"
+        local toggle = function()
+          t:toggle()
+        end
+        vim.keymap.set({ "n", "t", "i" }, "<C-'>", toggle, { desc = "Toggle terminal", buffer = t.bufnr })
+        vim.keymap.set({ "n", "t", "i" }, "<F7>", toggle, { desc = "Toggle terminal", buffer = t.bufnr })
+      end,
+      shading_factor = 2,
+      direction = "float",
+      float_opts = { border = "rounded" },
+    },
+  },
 
   -- change trouble config
   {
@@ -60,7 +84,7 @@ return {
   },
 
   -- disable trouble
-  { "folke/trouble.nvim", enabled = false },
+  { "folke/trouble.nvim",                             enabled = false },
 
   -- add symbols-outline
   {
@@ -115,6 +139,31 @@ return {
     },
   },
 
+  -- override conform formatting options
+  {
+    "stevearc/conform.nvim",
+    opts = function()
+      return {
+        format = {
+          -- change default format timeout to 5 seconds
+          timeout_ms = 10000,
+        },
+      }
+    end,
+  },
+
+  -- add format options to lspconfig
+  {
+    "neovim/nvim-lspconfig",
+    ---@class PluginLspOpts
+    opts = {
+      format = {
+        -- 0.5 second format timeout
+        timeout_ms = 500,
+      },
+    },
+  },
+
   -- add pyright to lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -128,6 +177,25 @@ return {
     },
   },
 
+  -- add solargraph to lspconfig
+  {
+    "neovim/nvim-lspconfig",
+    ---@class PluginLspOpts
+    opts = {
+      ---@type lspconfig.options
+      servers = {
+        -- -- solargraph will be automatically installed with mason and loaded with lspconfig
+        solargraph = {
+          settings = {
+            solargraph = {
+              formatting = false,
+            },
+          },
+        },
+      },
+    },
+  },
+
   -- add tsserver and setup with typescript.nvim instead of lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -136,7 +204,7 @@ return {
       init = function()
         require("lazyvim.util").lsp.on_attach(function(_, buffer)
           -- stylua: ignore
-          vim.keymap.set( "n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
+          vim.keymap.set("n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
           vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
         end)
       end,
@@ -291,6 +359,74 @@ return {
             fallback()
           end
         end, { "i", "s" }),
+      })
+    end,
+  },
+
+  -- Code folding support
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = {
+      "kevinhwang91/promise-async",
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require("statuscol.builtin")
+          require("statuscol").setup({
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc },      click = "v:lua.ScFa" },
+              { text = { "%s" },                  click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          })
+        end,
+      },
+    },
+    event = "BufReadPost",
+    opts = {
+      provider_selector = function()
+        return { "treesitter", "indent" }
+      end,
+    },
+
+    init = function()
+      vim.keymap.set("n", "zR", function()
+        require("ufo").openAllFolds()
+      end)
+      vim.keymap.set("n", "zM", function()
+        require("ufo").closeAllFolds()
+      end)
+    end,
+  },
+  { "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim", config = true },
+
+  -- indent scope highlighting
+  {
+    "echasnovski/mini.indentscope",
+    opts = {
+      draw = {
+        animation = require("mini.indentscope").gen_animation.none()
+      },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
       })
     end,
   },
