@@ -19,6 +19,9 @@ return {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "monokai-pro",
+      -- colorscheme = "tokyonight",
+      -- colorscheme = "gruvbox",
+      -- colorscheme = "catppuccin",
     },
   },
 
@@ -146,7 +149,7 @@ return {
       return {
         format = {
           -- change default format timeout to 5 seconds
-          timeout_ms = 10000,
+          timeout_ms = 250,
         },
       }
     end,
@@ -159,7 +162,7 @@ return {
     opts = {
       format = {
         -- 0.5 second format timeout
-        timeout_ms = 500,
+        timeout_ms = 250,
       },
     },
   },
