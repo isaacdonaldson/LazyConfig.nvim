@@ -38,3 +38,13 @@ vim.keymap.set("t", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc =
 
 -- Set up neogit
 vim.keymap.set("n", "<leader>gnt", "<cmd>Neogit<cr>", { desc = "Neogit tab page" })
+
+-- Add new binding for telescope searching
+vim.keymap.set("n", "<leader>fw", function()
+  require("telescope.builtin").live_grep()
+end, { desc = "Find words" })
+vim.keymap.set("n", "<leader>fW", function()
+  require("telescope.builtin").live_grep({
+    additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
+  })
+end, { desc = "Find words in all files (hidden & ignored)" })
