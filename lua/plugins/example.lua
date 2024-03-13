@@ -1,6 +1,5 @@
 -- TODO:
 -- look up keybinds
--- GitHub Copilot
 -- LSP's for other languages
 
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
