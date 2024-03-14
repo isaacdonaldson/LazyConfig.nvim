@@ -36,6 +36,15 @@ return {
     config = true,
   },
 
+  -- add git blame
+  {
+    "f-person/git-blame.nvim",
+    config = function()
+      vim.keymap.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", { desc = "Git Blame" })
+      vim.g.gitblame_enabled = 1 -- turn off by default
+    end
+  },
+
   -- add toggling of comments
   {
     "numToStr/Comment.nvim",
