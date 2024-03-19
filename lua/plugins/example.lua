@@ -41,7 +41,7 @@ return {
     "f-person/git-blame.nvim",
     config = function()
       vim.keymap.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", { desc = "Git Blame" })
-    end
+    end,
   },
 
   -- add toggling of comments
@@ -84,6 +84,13 @@ return {
       direction = "float",
       float_opts = { border = "rounded" },
     },
+  },
+
+  -- add Glow markdown preview
+  {
+    "ellisonleao/glow.nvim",
+    config = true,
+    cmd = "Glow",
   },
 
   -- change trouble config
@@ -183,6 +190,22 @@ return {
       servers = {
         -- pyright will be automatically installed with mason and loaded with lspconfig
         pyright = {},
+      },
+    },
+  },
+
+  -- add swift to lspconfig
+  {
+    "neovim/nvim-lspconfig",
+    ---@class PluginLspOpts
+    opts = {
+      ---@type lspconfig.options
+      servers = {
+        -- sourcekit will be automatically installed with mason and loaded with lspconfig
+        clangd = {},
+        sourcekit = {
+          root_dir = require("lspconfig").util.root_pattern(".git", "Package.swift", "compile_commands.json"),
+        },
       },
     },
   },

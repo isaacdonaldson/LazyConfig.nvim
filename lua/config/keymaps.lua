@@ -48,3 +48,7 @@ vim.keymap.set("n", "<leader>fW", function()
     additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
   })
 end, { desc = "Find words in all files (hidden & ignored)" })
+
+
+-- Add markdown viewing using Glow
+vim.keymap.set("n", "<leader>mv", "<cmd>Glow<cr>", { desc = "View current Markdown file" })
