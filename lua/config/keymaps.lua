@@ -52,3 +52,11 @@ end, { desc = "Find words in all files (hidden & ignored)" })
 
 -- Add markdown viewing using Glow
 vim.keymap.set("n", "<leader>mv", "<cmd>Glow<cr>", { desc = "View current Markdown file" })
+
+-- Set mapping for moving between tabs
+vim.keymap.set("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Focus previous buffer" })
+vim.keymap.set("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Focus next buffer" })
+
+-- Set mapping for moving tab forwards and backwards
+vim.keymap.set("n", "<b", "<cmd>BufferLineMovePrev<cr>", { desc = "Move buffer back" })
+vim.keymap.set("n", ">b", "<cmd>BufferLineMoveNext<cr>", { desc = "Move buffer forward" })
