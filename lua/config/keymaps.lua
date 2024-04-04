@@ -39,7 +39,7 @@ vim.keymap.set("t", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc =
 -- Set up neogit
 vim.keymap.set("n", "<leader>gnt", "<cmd>Neogit<cr>", { desc = "Neogit tab page" })
 
--- Add new binding for telescope searching
+-- Add new binding for telescope searching words
 vim.keymap.set("n", "<leader>fw", function()
   require("telescope.builtin").live_grep()
 end, { desc = "Find words" })
@@ -48,6 +48,16 @@ vim.keymap.set("n", "<leader>fW", function()
     additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
   })
 end, { desc = "Find words in all files (hidden & ignored)" })
+
+-- Add new binding for telescope searching files
+vim.keymap.set("n", "<leader>ff", function()
+  require("telescope.builtin").find_files()
+end, { desc = "Find words" })
+vim.keymap.set("n", "<leader>fF", function()
+  require("telescope.builtin").find_files({
+    additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
+  })
+end, { desc = "Find all files (hidden & ignored)" })
 
 
 -- Add markdown viewing using Glow
