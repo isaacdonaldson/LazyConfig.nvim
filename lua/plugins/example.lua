@@ -422,7 +422,7 @@ return {
       end)
     end,
   },
-  { "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim", config = true },
+  { "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim",       config = true },
 
   -- indent scope highlighting
   {
@@ -459,4 +459,7 @@ return {
     "folke/flash.nvim",
     enabled = false,
   },
+
+  -- add color highlighting for hex codes
+  { "NvChad/nvim-colorizer.lua",    config = function() require("colorizer").setup() end },
 }
