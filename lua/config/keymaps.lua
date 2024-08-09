@@ -8,6 +8,10 @@ vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
+-- Remap up/down for dealing with word wrap
+vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
 -- Add toggling of comment blocks
 vim.keymap.set("n", "<leader>/", function()
   require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1)
@@ -45,7 +49,9 @@ vim.keymap.set("n", "<leader>fw", function()
 end, { desc = "Find words" })
 vim.keymap.set("n", "<leader>fW", function()
   require("telescope.builtin").live_grep({
-    additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
+    additional_args = function(args)
+      return vim.list_extend(args, { "--hidden", "--no-ignore" })
+    end,
   })
 end, { desc = "Find words in all files (hidden & ignored)" })
 
@@ -55,10 +61,11 @@ vim.keymap.set("n", "<leader>ff", function()
 end, { desc = "Find words" })
 vim.keymap.set("n", "<leader>fF", function()
   require("telescope.builtin").find_files({
-    additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
+    additional_args = function(args)
+      return vim.list_extend(args, { "--hidden", "--no-ignore" })
+    end,
   })
 end, { desc = "Find all files (hidden & ignored)" })
-
 
 -- Add markdown viewing using Glow
 vim.keymap.set("n", "<leader>mv", "<cmd>Glow<cr>", { desc = "View current Markdown file" })
@@ -70,3 +77,27 @@ vim.keymap.set("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Focus next b
 -- Set mapping for moving tab forwards and backwards
 vim.keymap.set("n", "<b", "<cmd>BufferLineMovePrev<cr>", { desc = "Move buffer back" })
 vim.keymap.set("n", ">b", "<cmd>BufferLineMoveNext<cr>", { desc = "Move buffer forward" })
+
+-- Set mapping for moving lines up and down
+vim.keymap.set("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
+vim.keymap.set("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
+vim.keymap.set("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
+vim.keymap.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
+vim.keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
+vim.keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
+
+-- Add undo break-points
+vim.keymap.set("i", ",", ",<c-g>u")
+vim.keymap.set("i", ".", ".<c-g>u")
+vim.keymap.set("i", ";", ";<c-g>u")
+
+-- better indenting
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+
+-- Copy Utilities
+vim.keymap.set({ "n", "v" }, "<leader>cpf", "<cmd>CopyRelPath<cr>", { desc = "Copy filename" })
+vim.keymap.set({ "n", "v" }, "<leader>cpb", "<cmd>CopyCodeBlock<cr>", { desc = "Copy codeblock" })
+
+-- History of function
+vim.keymap.set({ "n", "v" }, "<leader>gt", "<cmd>TraceFunction<cr>", { desc = "Trace function" })
