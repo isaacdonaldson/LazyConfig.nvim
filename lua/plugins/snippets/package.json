@@ -1,0 +1,19 @@
+{
+	"contributes": {
+		"snippets": [
+			{
+				"language": ["javascript", "typescript"],
+				"path": "./typescript.json"
+			},
+			{
+				"language": "ruby",
+				"path": "./ruby.json"
+			},
+			{
+				"language": "all",
+				"path": "./general.json"
+			}
+		]
+	},
+	"name": "esak-snippets"
+}
