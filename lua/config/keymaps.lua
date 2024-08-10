@@ -32,19 +32,15 @@ vim.keymap.set(
   { desc = "ToggleTerm horizontal split" }
 )
 
-vim.keymap.set({ "n", "t", "i" }, "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>",
-  { desc = "Toggle terminal" })
-vim.keymap.set({ "n", "t", "i" }, "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>",
-  { desc = "Toggle terminal" })
+vim.keymap.set(
+  "n",
+  "<leader>tv",
+  "<cmd>ToggleTerm size=40 direction=vertical<cr>",
+  { desc = "ToggleTerm vertical split" }
+)
 
--- vim.keymap.set("n", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
--- vim.keymap.set("i", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
--- vim.keymap.set("t", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
-
--- vim.keymap.set("n", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
--- vim.keymap.set("i", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
--- vim.keymap.set("t", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
-
+vim.keymap.set({ "n", "t", "i" }, "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+vim.keymap.set({ "n", "t", "i" }, "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
 
 -- Set up neogit
 vim.keymap.set("n", "<leader>gnt", "<cmd>Neogit<cr>", { desc = "Neogit tab page" })
