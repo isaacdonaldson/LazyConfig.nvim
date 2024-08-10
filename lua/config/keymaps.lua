@@ -91,6 +91,10 @@ vim.keymap.set({ "n", "v" }, "<leader>gt", "<cmd>TraceFunction<cr>", { desc = "T
 vim.keymap.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", { desc = "Git Blame" })
 
 -- Snippets
-vim.keymap.set("n", "<leader>se", function() require("scissors").editSnippet() end)
+vim.keymap.set("n", "<leader>ne", function()
+  require("scissors").editSnippet()
+end)
 -- when used in visual mode, prefills the selection as snippet body
-vim.keymap.set({ "n", "x" }, "<leader>sa", function() require("scissors").addNewSnippet() end)
+vim.keymap.set({ "n", "x" }, "<leader>na", function()
+  require("scissors").addNewSnippet()
+end)
