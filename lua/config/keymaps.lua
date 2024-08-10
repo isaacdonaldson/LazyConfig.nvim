@@ -80,23 +80,6 @@ vim.keymap.set("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Focus next b
 vim.keymap.set("n", "<b", "<cmd>BufferLineMovePrev<cr>", { desc = "Move buffer back" })
 vim.keymap.set("n", ">b", "<cmd>BufferLineMoveNext<cr>", { desc = "Move buffer forward" })
 
--- Set mapping for moving lines up and down
-vim.keymap.set("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
-vim.keymap.set("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
-vim.keymap.set("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
-vim.keymap.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
-vim.keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
-vim.keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
-
--- Add undo break-points
-vim.keymap.set("i", ",", ",<c-g>u")
-vim.keymap.set("i", ".", ".<c-g>u")
-vim.keymap.set("i", ";", ";<c-g>u")
-
--- better indenting
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
-
 -- Copy Utilities
 vim.keymap.set({ "n", "v" }, "<leader>cpf", "<cmd>CopyRelPath<cr>", { desc = "Copy filename" })
 vim.keymap.set({ "n", "v" }, "<leader>cpb", "<cmd>CopyCodeBlock<cr>", { desc = "Copy codeblock" })
