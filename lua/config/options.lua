@@ -15,4 +15,4 @@ vim.o.fillchars = [[eob: ,fold: ,foldopen:>,foldsep: ,foldclose:v]]
 
 
 -- Turn off GitBlame by default
-vim.g.gitblame_enabled = 0
+-- vim.g.gitblame_enabled = 0

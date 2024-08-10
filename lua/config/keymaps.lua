@@ -32,13 +32,19 @@ vim.keymap.set(
   { desc = "ToggleTerm horizontal split" }
 )
 
-vim.keymap.set("n", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
-vim.keymap.set("i", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
-vim.keymap.set("t", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+vim.keymap.set({ "n", "t", "i" }, "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>",
+  { desc = "Toggle terminal" })
+vim.keymap.set({ "n", "t", "i" }, "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>",
+  { desc = "Toggle terminal" })
 
-vim.keymap.set("n", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
-vim.keymap.set("i", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
-vim.keymap.set("t", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+-- vim.keymap.set("n", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+-- vim.keymap.set("i", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+-- vim.keymap.set("t", "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+
+-- vim.keymap.set("n", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+-- vim.keymap.set("i", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+-- vim.keymap.set("t", "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+
 
 -- Set up neogit
 vim.keymap.set("n", "<leader>gnt", "<cmd>Neogit<cr>", { desc = "Neogit tab page" })
@@ -101,3 +107,11 @@ vim.keymap.set({ "n", "v" }, "<leader>cpb", "<cmd>CopyCodeBlock<cr>", { desc = "
 
 -- History of function
 vim.keymap.set({ "n", "v" }, "<leader>gt", "<cmd>TraceFunction<cr>", { desc = "Trace function" })
+
+-- Git blame
+vim.keymap.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", { desc = "Git Blame" })
+
+-- Snippets
+vim.keymap.set("n", "<leader>se", function() require("scissors").editSnippet() end)
+-- when used in visual mode, prefills the selection as snippet body
+vim.keymap.set({ "n", "x" }, "<leader>sa", function() require("scissors").addNewSnippet() end)
