@@ -93,8 +93,9 @@ vim.keymap.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", { desc = "Git Blame
 -- Snippets
 vim.keymap.set("n", "<leader>ne", function()
   require("scissors").editSnippet()
-end)
+end, { desc = "Edit a code snippet" })
+
 -- when used in visual mode, prefills the selection as snippet body
 vim.keymap.set({ "n", "x" }, "<leader>na", function()
   require("scissors").addNewSnippet()
-end)
+end, { desc = "Add a new code snippet" })
