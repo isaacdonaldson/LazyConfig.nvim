@@ -1,0 +1,24 @@
+{
+  "gitignore": {
+    "body": [
+      "# Ignore Everything",
+      "*",
+      "",
+      "# Include .gitignore",
+      "!.gitignore",
+      "",
+      "# Add back files",
+      "!.env",
+      "",
+      "# Add back folders",
+      "!src/",
+      "!src/*"
+    ],
+    "prefix": [
+      ".gi",
+      "ignore",
+      "git"
+    ],
+    "description": ".gitignore skeleton"
+  }
+}
