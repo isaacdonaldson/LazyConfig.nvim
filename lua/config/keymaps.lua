@@ -41,6 +41,7 @@ vim.keymap.set(
 
 vim.keymap.set({ "n", "t", "i" }, "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
 vim.keymap.set({ "n", "t", "i" }, "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+vim.keymap.set({ "n", "t", "i" }, "<C-\\>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
 
 -- Set up neogit
 vim.keymap.set("n", "<leader>gnt", "<cmd>Neogit<cr>", { desc = "Neogit tab page" })
