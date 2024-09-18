@@ -41,7 +41,17 @@ vim.keymap.set(
 
 vim.keymap.set({ "n", "t", "i" }, "<C-'>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
 vim.keymap.set({ "n", "t", "i" }, "<F7>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
-vim.keymap.set({ "n", "t", "i" }, "<C-\\>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+vim.keymap.set({ "n", "t", "i" }, "<C-/>", "<cmd>execute v:count . 'ToggleTerm'<cr>", { desc = "Toggle terminal" })
+
+vim.keymap.set({ "n", "t", "i" }, "<leader><C-/>h", function()
+  local term_num = #vim.api.nvim_tabpage_list_wins(0)
+  vim.cmd((term_num + 1) .. "ToggleTerm direction=vertical")
+end, { desc = "Split terminal horizontal" })
+
+vim.keymap.set({ "n", "t", "i" }, "<leader><C-/>v", function()
+  local term_num = #vim.api.nvim_tabpage_list_wins(0)
+  vim.cmd((term_num + 1) .. "ToggleTerm direction=horizontal")
+end, { desc = "Split terminal vertically" })
 
 -- Set up neogit
 vim.keymap.set("n", "<leader>gnt", "<cmd>Neogit<cr>", { desc = "Neogit tab page" })
