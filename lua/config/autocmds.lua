@@ -50,3 +50,27 @@ vim.api.nvim_create_user_command("CopyCodeBlock", function(opts)
   vim.fn.setreg("+", result)
   vim.notify("Text copied to clipboard")
 end, { range = true })
+
+vim.api.nvim_create_user_command("SearchNextTextOccurence", function()
+  local mode = vim.api.nvim_get_mode().mode
+
+  local function make_replacement(text)
+    local replacement = vim.fn.input("Replace with: ")
+    local cursor_pos = vim.fn.getpos(".")
+    vim.api.nvim_command(":%s/" .. vim.fn.escape(text, "/") .. "/" .. replacement .. "/gc")
+    vim.fn.cursor(cursor_pos[1], cursor_pos[2])
+  end
+
+  if mode == "n" then
+    -- Normal mode: get the word under the cursor
+    local word = vim.fn.expand("<cword>")
+    if word ~= "" then
+      make_replacement(word)
+    end
+  elseif mode == "v" or mode == "V" or mode == "" then
+    local text = vim.fn.getreg(vim.v.register)
+    if text ~= "" then
+      make_replacement(text)
+    end
+  end
+end, {})

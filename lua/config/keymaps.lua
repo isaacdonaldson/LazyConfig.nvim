@@ -110,3 +110,18 @@ end, { desc = "Edit a code snippet" })
 vim.keymap.set({ "n", "x" }, "<leader>na", function()
   require("scissors").addNewSnippet()
 end, { desc = "Add a new code snippet" })
+
+-- Hightlight the next occurence of word under cursors
+vim.keymap.set(
+  "n",
+  "gl",
+  "<cmd>SearchNextTextOccurence<cr>",
+  { desc = "Change occurences of text under the cursor", noremap = true }
+)
+
+vim.keymap.set(
+  "v",
+  "gl",
+  "<cmd>SearchNextTextOccurence<cr>",
+  { desc = "Highlight an occurence of the word under the cursor", silent = true }
+)
