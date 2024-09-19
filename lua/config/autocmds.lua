@@ -56,16 +56,34 @@ vim.api.nvim_create_user_command("SearchNextTextOccurence", function()
   local text = ""
 
   local function make_replacement()
-    local replacement = vim.fn.input("Replace with: ")
+    local search = vim.fn.escape(text, "/.*$^~[")
+    local count = vim.fn.searchcount({ re = search, timeout = 500 }).total
+    local hlsearch_setting = vim.opt.hlsearch
+
+    -- Enable search highlighting
+    vim.opt.hlsearch = true
+
+    -- Higlight every occurence of the text
+    -- vim.api.nvim_command("normal! *")
+
+    local replacement = vim.fn.input("Replace '" .. search .. "'  with: ")
 
     if replacement == "" then
+      -- Restore hlsearch setting
+      vim.opt.hlsearch = hlsearch_setting
       return
     end
 
-    require("notify")("'" .. text .. "' replaced with '" .. replacement .. "'")
+    require("notify")("Replacing '" .. text .. "' with '" .. replacement .. "'" .. " (" .. count .. " times)")
     local cursor_pos = vim.fn.getpos(".")
-    vim.api.nvim_command(":%s/" .. vim.fn.escape(text, "/") .. "/" .. replacement .. "/gc")
+
+    vim.api.nvim_command(":.,$s/" .. search .. "/" .. vim.fn.escape(replacement, "/") .. "/gc")
+    vim.api.nvim_command(":0,.s/" .. search .. "/" .. vim.fn.escape(replacement, "/") .. "/gc")
+
     vim.fn.cursor(cursor_pos[1], cursor_pos[2])
+
+    -- Restore hlsearch setting
+    vim.opt.hlsearch = hlsearch_setting
   end
 
   if mode == "n" then
