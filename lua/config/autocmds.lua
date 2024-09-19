@@ -53,9 +53,11 @@ end, { range = true })
 
 vim.api.nvim_create_user_command("SearchNextTextOccurence", function()
   local mode = vim.api.nvim_get_mode().mode
+  local text = ""
 
-  local function make_replacement(text)
+  local function make_replacement()
     local replacement = vim.fn.input("Replace with: ")
+    require("notify")("'" .. text .. "' replaced with '" .. replacement .. "'")
     local cursor_pos = vim.fn.getpos(".")
     vim.api.nvim_command(":%s/" .. vim.fn.escape(text, "/") .. "/" .. replacement .. "/gc")
     vim.fn.cursor(cursor_pos[1], cursor_pos[2])
@@ -65,12 +67,17 @@ vim.api.nvim_create_user_command("SearchNextTextOccurence", function()
     -- Normal mode: get the word under the cursor
     local word = vim.fn.expand("<cword>")
     if word ~= "" then
-      make_replacement(word)
+      text = word
+      make_replacement()
     end
   elseif mode == "v" or mode == "V" or mode == "" then
-    local text = vim.fn.getreg(vim.v.register)
-    if text ~= "" then
-      make_replacement(text)
+    vim.cmd('noau normal! "vy"')
+    local words = vim.fn.getreg("v")
+    vim.fn.setreg("v", {})
+
+    if words ~= "" then
+      text = words
+      make_replacement()
     end
   end
 end, {})
