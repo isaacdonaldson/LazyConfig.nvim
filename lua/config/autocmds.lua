@@ -56,7 +56,18 @@ vim.api.nvim_create_user_command("SearchNextTextOccurence", function()
   local text = ""
 
   local function make_replacement()
+    -- Get current value of autopairs
+    local autopairs = vim.g.AutoPairs
+    -- Turn it off for replace command
+    vim.g.AutoPairs = 0
     local replacement = vim.fn.input("Replace with: ")
+    -- Turn it back on after the replace command
+    vim.g.AutoPairs = autopairs
+
+    if replacement == "" then
+      return
+    end
+
     require("notify")("'" .. text .. "' replaced with '" .. replacement .. "'")
     local cursor_pos = vim.fn.getpos(".")
     vim.api.nvim_command(":%s/" .. vim.fn.escape(text, "/") .. "/" .. replacement .. "/gc")
