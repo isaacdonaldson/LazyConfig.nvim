@@ -6,6 +6,10 @@
 vim.o.number = true
 vim.o.relativenumber = false
 
+-- Text wrapping at window width
+vim.o.wrap = true
+vim.o.linebreak = true
+
 -- Folding settings
 vim.o.foldcolumn = "1" -- "0" remove the fold column
 vim.o.foldlevelstart = 99
