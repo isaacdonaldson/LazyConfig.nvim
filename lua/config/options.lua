@@ -25,3 +25,6 @@ vim.g.lazyvim_statuscolumn = {
 }
 
 vim.opt.scrolloff = 10
+
+-- turn off animate
+vim.g.snacks_animate = false

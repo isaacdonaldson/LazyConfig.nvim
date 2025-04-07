@@ -51,6 +51,7 @@ vim.api.nvim_create_user_command("CopyCodeBlock", function(opts)
   vim.notify("Text copied to clipboard")
 end, { range = true })
 
+-- Search and replace
 vim.api.nvim_create_user_command("SearchNextTextOccurence", function()
   local mode = vim.api.nvim_get_mode().mode
   local text = ""
@@ -74,7 +75,7 @@ vim.api.nvim_create_user_command("SearchNextTextOccurence", function()
       return
     end
 
-    require("notify")("Replacing '" .. text .. "' with '" .. replacement .. "'" .. " (" .. count .. " times)")
+    require("notify")("Replacing '" .. search .. "' with '" .. replacement .. "'" .. " (" .. count .. " times)")
     local cursor_pos = vim.fn.getpos(".")
 
     vim.api.nvim_command(":.,$s/" .. search .. "/" .. vim.fn.escape(replacement, "/") .. "/gc")
@@ -103,4 +104,29 @@ vim.api.nvim_create_user_command("SearchNextTextOccurence", function()
       make_replacement()
     end
   end
+end, {})
+
+-- Generate a UUID v4 with ":Uuid"
+vim.api.nvim_create_user_command("Uuid", function()
+  local uuid_command = "uuidgen | tr '[:upper:]' '[:lower:]' | tr -d '\n' | pbcopy && pbpaste"
+
+  local uuid = vim.fn.system(uuid_command)
+
+  vim.fn.setreg("+", uuid)
+  vim.notify("Generated UUID: '" .. uuid .. "' and copied to clipboard", "info", {
+    title = "UUID v4",
+    timeout = 5000,
+  })
+end, {})
+
+-- Generate a UUID v4 with ":Uuid"
+vim.api.nvim_create_user_command("Utc", function()
+  local time_command = "TZ=UTC date '+%Y-%m-%d %H:%M:%S %Z' && date"
+
+  local time = vim.fn.system(time_command)
+
+  vim.notify("Current time in UTC is:\n\t" .. time, "info", {
+    title = "UTC Time",
+    timeout = 10000,
+  })
 end, {})

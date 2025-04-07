@@ -125,3 +125,83 @@ vim.keymap.set(
   "<cmd>SearchNextTextOccurence<cr>",
   { desc = "Highlight an occurence of the word under the cursor", silent = true }
 )
+
+vim.keymap.set(
+  "n",
+  "<leader>K",
+  "<cmd> lua vim.diagnostic.open_float() <CR>",
+  { desc = "Toggles local troubleshoot diaglog window", noremap = true }
+)
+
+vim.keymap.set("t", "<ESC><ESC>", "<C-\\><C-n>", { desc = "Enter normal mode in terminal mode", noremap = true })
+
+-- Navigate to a mark
+for i = 1, 9 do
+  local mark_char = string.char(64 + i)
+  vim.keymap.set("n", "<leader>" .. i, function()
+    local mark_pos = vim.api.nvim_get_mark(mark_char, {})
+    if mark_pos[1] ~= 0 then
+      vim.cmd("normal! `" .. mark_char) -- Jump to the mark
+    else
+      vim.notify("No mark set for '" .. i .. "' (" .. mark_char .. ")")
+    end
+  end, { desc = "Go to mark " .. i .. " (" .. mark_char .. ")" })
+end
+
+-- Set a mark
+for i = 1, 9 do
+  local mark_char = string.char(64 + i)
+  vim.keymap.set("n", "<leader>ms" .. i, function()
+    vim.cmd("delmarks " .. mark_char)
+    vim.cmd("mark " .. mark_char)
+    vim.notify("Mark set for '" .. i .. "' (" .. mark_char .. ")")
+  end, { desc = "Set mark " .. i .. " (" .. mark_char .. ")" })
+end
+
+-- Delete a mark
+for i = 1, 9 do
+  local mark_char = string.char(64 + i)
+  vim.keymap.set("n", "<leader>md" .. i, function()
+    vim.cmd("delmarks " .. mark_char)
+    vim.notify("Mark '" .. i .. "' deleted (" .. mark_char .. ")")
+  end, { desc = "Delete mark " .. i .. " (" .. mark_char .. ")" })
+end
+
+-- List all marks
+vim.keymap.set("n", "<leader>ml", function()
+  -- list to hold quickfix items
+  local qf_list = {}
+
+  for i = 1, 9 do
+    local mark_char = string.char(64 + i)
+    local mark_pos = vim.api.nvim_get_mark(mark_char, {})
+
+    if mark_pos[1] ~= 0 then
+      local buf_num = mark_pos[3]
+      local buf_name = vim.api.nvim_get_buf_name(buf_num)
+
+      if buf_num == 0 then
+        buf_name = mark_pos[4]
+      end
+
+      table.insert(qf_list, {
+        bufnr = buf_num,
+        filename = buf_name,
+        lnum = mark_pos[1],
+        col = mark_pos[2],
+        text = i,
+      })
+    end
+  end
+
+  -- Set quickfix list
+  vim.fn.setqflist(qf_list)
+
+  -- Open quickfix window if there are marks
+  if #qf_list > 0 then
+    vim.cmd("copen")
+  else
+    vim.notify("No marks set")
+    vim.cmd("cclose")
+  end
+end, { desc = "List all marks" })

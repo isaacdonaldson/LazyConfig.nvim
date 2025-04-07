@@ -1,1 +1,24 @@
-{"gitignore":{"body":["# Ignore Everything","*","","# Include .gitignore","!.gitignore","","# Add back files","# !.env","","# Add back folders","# !src\/","# !src\/**\/*"],"description":".gitignore skeleton","prefix":[".gi","ignore","git"]}}
+{
+  "gitignore": {
+    "body": [
+      "# Ignore Everything",
+      "*",
+      "",
+      "# Include .gitignore",
+      "!.gitignore",
+      "",
+      "# Add back files",
+      "# !.env",
+      "",
+      "# Add back folders",
+      "# !src\/",
+      "# !src\/**\/*"
+    ],
+    "description": ".gitignore skeleton",
+    "prefix": [
+      ".gi",
+      "ignore",
+      "git"
+    ]
+  }
+}
